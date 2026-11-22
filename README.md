@@ -43,6 +43,5 @@ src/
 ├── components/  共通の部品（`ui/` は shadcn/ui をもとにした部品）
 ├── features/    区画ごとの部品と表示する内容
 ├── constants/   区画の並びと見出しの設定
-├── hooks/       共通の処理（React のフック）
 └── type/        型の定義
 ```

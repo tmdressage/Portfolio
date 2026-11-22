@@ -252,37 +252,6 @@ main::before {
   }
 }
 
-/* 画面に入ったら、駈歩（かけあし）の「タ・タ・タン」の弾みで現れる */
-.reveal {
-  opacity: 0;
-  transform: translateY(28px);
-}
-
-.reveal-in {
-  animation: canter 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
-}
-
-@keyframes canter {
-  0% {
-    opacity: 0;
-    transform: translateY(28px);
-  }
-  45% {
-    opacity: 1;
-    transform: translateY(-6px);
-  }
-  65% {
-    transform: translateY(2px);
-  }
-  82% {
-    transform: translateY(-2px);
-  }
-  100% {
-    opacity: 1;
-    transform: none;
-  }
-}
-
 /* ===== 馬（Horse.tsx）の動き：脚は付け根と膝で回し、胴は上下に弾ませる（基本は駈歩） ===== */
 .horse-body {
   animation: horse-bob 0.6s linear infinite;
@@ -1058,17 +1027,12 @@ main::before {
   clip-path: polygon(50% 0, 100% var(--ema-face-roof), 100% 100%, 0 100%, 0 var(--ema-face-roof));
 }
 
-/* 動きを減らす設定の人には、動きを止めて最初から表示する */
+/* 動きを減らす設定の人には、CSS の動きを止める（Motion で付けた動きは、Reveal・SkillLane の中で止める） */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation: none !important;
     transition: none !important;
-  }
-
-  .reveal {
-    opacity: 1;
-    transform: none;
   }
 }
