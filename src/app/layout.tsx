@@ -27,6 +27,8 @@ const notoSansJp = Noto_Sans_JP({
 export const metadata: Metadata = {
   title: 'Takeshi Motoyoshi | Portfolio',
   description: 'Web エンジニア Takeshi Motoyoshi のポートフォリオ',
+  // 名前で検索しても出てこないよう、検索エンジンに載せない
+  robots: { index: false },
 }
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
