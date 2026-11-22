@@ -1,9 +1,11 @@
 ## 概要
 
+ドメイン：https://tm-works-portfolio.vercel.app/
+
 - ポートフォリオサイトです。
 - 自己紹介、得意分野、保有技術、経験案件、個人開発、保有資格、経歴を1ページにまとめています。
 - 見出しの馬アイコンは、区画ごとに歩き方が変わります。
-- バックエンドはありません。表示する内容は `src/features/*/constants/` の TypeScript ファイルで管理しています。
+- 表示する内容は `src/features/*/constants/` の TypeScript ファイルで管理しています。
 
 ## 使用技術
 
