@@ -57,7 +57,7 @@ export function ProfileHero({ profile }: Props) {
         >
           <path
             d='M0 70 C150 30 300 60 450 35 S800 80 1000 70 C1150 30 1300 60 1450 35 S1800 80 2000 70 L2000 120 L0 120 Z'
-            className='fill-navy'
+            className='fill-hills'
           />
         </svg>
         <div className='snowfield snowfield-moving absolute inset-x-0 bottom-0 h-22.5 border-t border-gold/40' />

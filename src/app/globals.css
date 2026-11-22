@@ -4,7 +4,7 @@
 @theme {
   /* ===== 基本の色（濃い藍ベース） ===== */
   --color-night: #060b18; /* ページの背景 */
-  --color-navy: #0f1d3d; /* 紺（背景の光・遠くの丘・絵馬の屋根板） */
+  --color-navy: #0f1d3d; /* 紺（背景の光・絵馬の屋根板） */
   --color-navy-light: #1c3a78; /* 明るい紺（背景の光・絵馬の屋根板・絵馬の紐） */
   --color-steel: #2a4a85; /* 鋼色＝くすんだ青（背景の光） */
   --color-gold: #d4af6a;
@@ -31,11 +31,12 @@
   --color-horse-icon-from: #1c3366; /* 見出しの丸い馬アイコンの背景：中心 */
   --color-horse-icon-to: #081022; /* 見出しの丸い馬アイコンの背景：外側 */
 
-  /* ===== 雪原（トップの地面） ===== */
+  /* ===== トップの景色（雪原・遠くの丘） ===== */
   --color-snow-light: #dde6f2;
   --color-snow: #bccadf;
   --color-snow-dark: #95a7c4;
   --color-hoofprint: rgb(70 90 130 / 0.5); /* 雪原に残る蹄の跡 */
+  --color-hills: #6a80ab; /* 遠くの丘（夜空と見分けやすい薄い青灰） */
 
   /* ===== 馬（Horse.tsx） ===== */
   --color-horse-near: #e2c07c; /* 手前の脚と耳（明るい金） */
