@@ -7,5 +7,6 @@ export type Strength = {
 export type Profile = {
   name: string
   role: string
+  about: string[]
   strengths: Strength[]
 }
