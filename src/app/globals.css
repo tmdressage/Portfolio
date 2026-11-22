@@ -1,1 +1,118 @@
 @import 'tailwindcss';
+
+/* 色の定義（bg-night / text-gold などのクラス名で使う。CSS の中では var(--color-gold) のように使う） */
+@theme {
+  /* ===== 基本の色（濃い藍ベース） ===== */
+  --color-night: #060b18; /* ページの背景 */
+  --color-navy: #0f1d3d; /* 紺（背景の光・遠くの丘・絵馬の屋根板） */
+  --color-navy-light: #1c3a78; /* 明るい紺（背景の光・絵馬の屋根板・絵馬の紐） */
+  --color-steel: #2a4a85; /* 鋼色＝くすんだ青（背景の光） */
+  --color-gold: #d4af6a;
+  --color-gold-light: #f3dca4;
+  --color-gold-dark: #8f6a2e;
+
+  /* ===== 文字・線 ===== */
+  --color-frost: #e2e5ec; /* 霜色＝青みのある白（本文の文字） */
+  --color-muted: #a3acbc; /* 控えめな文字 */
+  --color-line: rgb(212 175 106 / 0.22); /* 枠線・区切り線 */
+  --color-bg-pattern: rgb(140 175 230 / 0.12); /* 背景の雪の結晶の模様の線（淡い青） */
+  --color-sheen-start: #b8893e; /* 金色の文字（.gold-text）の光の帯：左端 */
+  --color-sheen-middle: #c99a4e; /* 金色の文字の光の帯：中央 */
+  --color-sheen-end: #a8813f; /* 金色の文字の光の帯：右端 */
+
+  /* ===== 面（カード・ダイアログなど） ===== */
+  --color-card: #0a132a; /* 得意分野のカード（背景の模様が透けないよう不透明にする） */
+  --color-project-card-from: rgb(22 40 86 / 0.55); /* 案件カードのグラデーション：始まり */
+  --color-project-card-to: rgb(6 12 30 / 0.78); /* 案件カードのグラデーション：終わり */
+  --color-project-card-hover: #a8c0e2; /* 案件カード（絵馬）に乗せたときの縁と光の色（淡い青） */
+  --color-dialog-from: #0f1e40; /* 案件ダイアログのグラデーション：始まり */
+  --color-dialog-to: #070d1d; /* 案件ダイアログのグラデーション：終わり */
+  --color-backdrop: rgb(2 4 12 / 0.72); /* ダイアログの後ろを暗くする幕 */
+  --color-horse-icon-from: #1c3366; /* 見出しの丸い馬アイコンの背景：中心 */
+  --color-horse-icon-to: #081022; /* 見出しの丸い馬アイコンの背景：外側 */
+
+  /* ===== 雪原（トップの地面） ===== */
+  --color-snow-light: #dde6f2;
+  --color-snow: #bccadf;
+  --color-snow-dark: #95a7c4;
+  --color-hoofprint: rgb(70 90 130 / 0.5); /* 雪原に残る蹄の跡 */
+
+  /* ===== 馬（Horse.tsx） ===== */
+  --color-horse-near: #e2c07c; /* 手前の脚と耳（明るい金） */
+  --color-horse-far: #9c7638; /* 奥の脚（暗い金） */
+  --color-horse-mane: #7a5524; /* たてがみ */
+  --color-horse-eye: #2a160e; /* 目 */
+}
+
+/* 書体の定義（font-serif-en / font-serif-ja のクラス名で使う。実体は layout.tsx で読み込む） */
+@theme inline {
+  --font-sans: var(--font-noto-sans-jp);
+  --font-serif-en: var(--font-cormorant);
+  --font-serif-ja: var(--font-shippori);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-night);
+  color: var(--color-frost);
+  overflow-x: hidden;
+}
+
+/* 背景の光（紺・鋼色の淡い光） */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(
+      900px 600px at 10% -10%,
+      --alpha(var(--color-navy-light) / 55%),
+      transparent 60%
+    ),
+    radial-gradient(800px 700px at 110% 40%, --alpha(var(--color-steel) / 35%), transparent 60%),
+    radial-gradient(700px 500px at 30% 120%, --alpha(var(--color-navy) / 80%), transparent 60%),
+    var(--color-night);
+}
+
+/* 背景のざらつき（紙のような質感） */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.18;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+
+/* 背景の雪の結晶の模様（6本の腕と枝の結晶を、6方向に等間隔に並べる）。背景の光とざらつきの間に、画面に固定して重ねる
+   body の前後の層（::before / ::after）は光とざらつきで使っているので、main の前の層を使う
+   模様の絵は形の切り抜き（mask）にだけ使い、色は --color-bg-pattern で付ける */
+main::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--color-bg-pattern);
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='166'%3E%3Cpath d='M24 41.5L24 23.5M24 32.5L19.6 28.8M24 32.5L28.4 28.8M24 28L21 25.5M24 28L27 25.5M24 41.5L8.4 32.5M16.2 37L10.8 39M16.2 37L15.2 31.3M12.3 34.8L8.6 36.1M12.3 34.8L11.6 30.9M24 41.5L8.4 50.5M16.2 46L15.2 51.7M16.2 46L10.8 44M12.3 48.2L11.6 52.1M12.3 48.2L8.6 46.9M24 41.5L24 59.5M24 50.5L28.4 54.2M24 50.5L19.6 54.2M24 55L27 57.5M24 55L21 57.5M24 41.5L39.6 50.5M31.8 46L37.2 44M31.8 46L32.8 51.7M35.7 48.3L39.4 46.9M35.7 48.3L36.4 52.1M24 41.5L39.6 32.5M31.8 37L32.8 31.3M31.8 37L37.2 39M35.7 34.8L36.4 30.9M35.7 34.8L39.4 36.1M26.8 39.9L24 38.3L21.2 39.9L21.2 43.1L24 44.7L26.8 43.1ZM72 124.5L72 106.5M72 115.5L67.6 111.8M72 115.5L76.4 111.8M72 111L69 108.5M72 111L75 108.5M72 124.5L56.4 115.5M64.2 120L58.8 122M64.2 120L63.2 114.3M60.3 117.8L56.6 119.1M60.3 117.8L59.6 113.9M72 124.5L56.4 133.5M64.2 129L63.2 134.7M64.2 129L58.8 127M60.3 131.2L59.6 135.1M60.3 131.2L56.6 129.9M72 124.5L72 142.5M72 133.5L76.4 137.2M72 133.5L67.6 137.2M72 138L75 140.5M72 138L69 140.5M72 124.5L87.6 133.5M79.8 129L85.2 127M79.8 129L80.8 134.7M83.7 131.2L87.4 129.9M83.7 131.2L84.4 135.1M72 124.5L87.6 115.5M79.8 120L80.8 114.3M79.8 120L85.2 122M83.7 117.8L84.4 113.9M83.7 117.8L87.4 119.1M74.8 122.9L72 121.3L69.2 122.9L69.2 126.1L72 127.7L74.8 126.1Z' fill='none' stroke='black' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* 動きを減らす設定の人には、動きを止めて最初から表示する */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
