@@ -1,4 +1,4 @@
-import { Chip } from '@/components/elements/Chip'
+import { Badge } from '@/components/ui/badge'
 
 type Props = {
   items: string[]
@@ -9,7 +9,7 @@ export function ChipList({ items }: Props) {
   return (
     <span className='flex flex-wrap gap-1.5'>
       {items.map((item) => (
-        <Chip key={item}>{item}</Chip>
+        <Badge key={item}>{item}</Badge>
       ))}
     </span>
   )

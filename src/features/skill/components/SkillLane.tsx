@@ -2,8 +2,8 @@
 
 import { Horse } from '@/components/elements/Horse'
 import { useInView } from '@/hooks/useInView'
-import { cn } from '@/lib/cn'
 import type { Skill } from '@/type/skill'
+import { cn } from 'cn'
 import { useState } from 'react'
 
 // レーンを走る馬の幅（px）。右端で馬がはみ出さないように位置の計算に使う

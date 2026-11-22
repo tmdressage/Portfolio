@@ -1,7 +1,7 @@
 'use client'
 
 import { useInView } from '@/hooks/useInView'
-import { cn } from '@/lib/cn'
+import { cn } from 'cn'
 
 type Props = {
   children: React.ReactNode

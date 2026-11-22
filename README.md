@@ -11,7 +11,7 @@
 
 Next.js 16（App Router）、React 19、TypeScript、Tailwind CSS 4、ESLint、Prettier、GitHub Actions（CI）
 
-- UI：部品はすべて Tailwind CSS で作成しています。shadcn/uiなどのUIフレームワークを導入予定。
+- UI：shadcn/ui の 部品と Tailwind CSS で作成しています。
 - 馬のモーション：馬は SVG で描き、CSS アニメーション（@keyframes）で動かしています。脚は付け根と膝の2か所で回転させ、7種類の歩き方はクラス名で切り替えています。モーション用ライブラリを導入予定。
 
 ## 起動方法
@@ -40,10 +40,9 @@ npm run dev
 ```
 src/
 ├── app/         ページとレイアウト、全体の CSS（配色の定義も含む）
-├── components/  共通の部品
+├── components/  共通の部品（`ui/` は shadcn/ui をもとにした部品）
 ├── features/    区画ごとの部品と表示する内容
 ├── constants/   区画の並びと見出しの設定
 ├── hooks/       共通の処理（React のフック）
-├── lib/         補助の関数
 └── type/        型の定義
 ```

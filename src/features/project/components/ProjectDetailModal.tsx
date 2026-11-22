@@ -2,11 +2,11 @@
 
 import { ChipList } from '@/components/elements/ChipList'
 import { EnglishLabel } from '@/components/elements/EnglishLabel'
+import { Dialog, DialogClose, DialogContent, DialogTitle } from '@/components/ui/dialog'
 import { PHASES } from '@/features/project/constants/phases'
 import { formatProjectNo } from '@/features/project/utils/formatProjectNo'
-import { cn } from '@/lib/cn'
 import type { Project } from '@/type/project'
-import { useEffect, useRef } from 'react'
+import { cn } from 'cn'
 
 type DetailBlockProps = {
   label: string
@@ -35,32 +35,28 @@ function DetailBlock({ label, subLabel, children }: DetailBlockProps) {
 
 type ProjectDetailProps = {
   project: Project
-  onClose: () => void
 }
 
-// ダイアログの中身（高さは中身の長さのまま。はみ出た分は外側の枠をスクロールして見せる）
-function ProjectDetail({ project, onClose }: ProjectDetailProps) {
+// ダイアログの中身（高さは中身の長さのまま。はみ出た分は外側の幕をスクロールして見せる）
+function ProjectDetail({ project }: ProjectDetailProps) {
   return (
-    <div className='my-auto w-full max-w-215 overflow-hidden rounded-[22px] border border-gold/45 bg-[linear-gradient(170deg,var(--color-dialog-from)_0%,var(--color-dialog-to)_60%)] shadow-[0_40px_120px] shadow-black/70'>
+    <>
       <header className='relative border-b border-line px-5 pt-8.5 pb-5.5 md:px-7.5'>
-        <button
-          type='button'
-          onClick={onClose}
+        <DialogClose
           aria-label='閉じる'
           className='absolute top-3.5 right-3.5 size-10 cursor-pointer rounded-full border border-line bg-black/25 text-xl text-gold transition duration-300 hover:rotate-90 hover:border-gold'
         >
           ×
-        </button>
+        </DialogClose>
         <EnglishLabel>
           <b className='mr-2.5 not-italic'>{formatProjectNo(project.no)}</b>Project
         </EnglishLabel>
         <p className='text-[15px] text-muted'>{project.period}</p>
-        <h3
-          id='project-dialog-title'
-          className='mt-1.5 pr-10 font-serif-ja text-[clamp(20px,3vw,28px)] leading-snug font-extrabold'
-        >
-          {project.title}
-        </h3>
+        <DialogTitle asChild>
+          <h3 className='mt-1.5 pr-10 font-serif-ja text-[clamp(20px,3vw,28px)] leading-snug font-extrabold'>
+            {project.title}
+          </h3>
+        </DialogTitle>
       </header>
 
       <div className='grid gap-6 px-5 pt-6 pb-8 text-[15px] md:px-7.5'>
@@ -120,7 +116,7 @@ function ProjectDetail({ project, onClose }: ProjectDetailProps) {
           </DetailBlock>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
@@ -130,30 +126,18 @@ type Props = {
 }
 
 // 案件の詳細ダイアログ。project が渡されると開き、null になると閉じる
-// ダイアログ自体は画面いっぱいの透明な枠にして、中身が画面からはみ出たら枠ごとスクロールする
+// 閉じるボタン・背景・Esc キーで閉じると onClose を呼ぶ
 export function ProjectDetailModal({ project, onClose }: Props) {
-  const dialogRef = useRef<HTMLDialogElement>(null)
-
-  useEffect(() => {
-    const dialog = dialogRef.current
-    if (!dialog) return
-
-    if (project && !dialog.open) dialog.showModal()
-    if (!project && dialog.open) dialog.close()
-  }, [project])
-
   return (
-    <dialog
-      ref={dialogRef}
-      onClose={onClose}
-      onClick={(event) => {
-        // 枠の外（暗くなった背景）を押したら閉じる
-        if (event.target === event.currentTarget) onClose()
+    <Dialog
+      open={project !== null}
+      onOpenChange={(open) => {
+        if (!open) onClose()
       }}
-      aria-labelledby='project-dialog-title'
-      className='project-dialog m-0 size-full max-h-none max-w-none justify-center overflow-y-auto overscroll-contain bg-transparent px-4 py-5 text-frost open:flex'
     >
-      {project && <ProjectDetail project={project} onClose={onClose} />}
-    </dialog>
+      <DialogContent className='max-w-215 overflow-hidden rounded-[22px] border border-gold/45 bg-[linear-gradient(170deg,var(--color-dialog-from)_0%,var(--color-dialog-to)_60%)] text-frost shadow-[0_40px_120px] shadow-black/70'>
+        {project && <ProjectDetail project={project} />}
+      </DialogContent>
+    </Dialog>
   )
 }

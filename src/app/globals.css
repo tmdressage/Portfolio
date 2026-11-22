@@ -1058,22 +1058,6 @@ main::before {
   clip-path: polygon(50% 0, 100% var(--ema-face-roof), 100% 100%, 0 100%, 0 var(--ema-face-roof));
 }
 
-/* ===== 案件ダイアログ ===== */
-.project-dialog::backdrop {
-  background: var(--color-backdrop);
-  backdrop-filter: blur(6px);
-}
-
-/* はみ出た中身は画面いっぱいの枠ごとスクロールして見せる。そのとき縦のスクロールバーは見えなくする */
-.project-dialog {
-  scrollbar-width: none;
-}
-
-/* scrollbar-width に対応していないブラウザ（古い Safari など）向け */
-.project-dialog::-webkit-scrollbar {
-  display: none;
-}
-
 /* 動きを減らす設定の人には、動きを止めて最初から表示する */
 @media (prefers-reduced-motion: reduce) {
   *,
