@@ -1,3 +1,4 @@
+import { HorseGradient } from '@/components/elements/Horse'
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, Noto_Sans_JP, Shippori_Mincho_B1 } from 'next/font/google'
 import './globals.css'
@@ -34,7 +35,10 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       lang='ja'
       className={`${cormorant.variable} ${shippori.variable} ${notoSansJp.variable} antialiased`}
     >
-      <body className='font-sans leading-[1.8]'>{children}</body>
+      <body className='font-sans leading-[1.8]'>
+        <HorseGradient />
+        {children}
+      </body>
     </html>
   )
 }

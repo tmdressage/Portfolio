@@ -102,6 +102,761 @@ main::before {
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='166'%3E%3Cpath d='M24 41.5L24 23.5M24 32.5L19.6 28.8M24 32.5L28.4 28.8M24 28L21 25.5M24 28L27 25.5M24 41.5L8.4 32.5M16.2 37L10.8 39M16.2 37L15.2 31.3M12.3 34.8L8.6 36.1M12.3 34.8L11.6 30.9M24 41.5L8.4 50.5M16.2 46L15.2 51.7M16.2 46L10.8 44M12.3 48.2L11.6 52.1M12.3 48.2L8.6 46.9M24 41.5L24 59.5M24 50.5L28.4 54.2M24 50.5L19.6 54.2M24 55L27 57.5M24 55L21 57.5M24 41.5L39.6 50.5M31.8 46L37.2 44M31.8 46L32.8 51.7M35.7 48.3L39.4 46.9M35.7 48.3L36.4 52.1M24 41.5L39.6 32.5M31.8 37L32.8 31.3M31.8 37L37.2 39M35.7 34.8L36.4 30.9M35.7 34.8L39.4 36.1M26.8 39.9L24 38.3L21.2 39.9L21.2 43.1L24 44.7L26.8 43.1ZM72 124.5L72 106.5M72 115.5L67.6 111.8M72 115.5L76.4 111.8M72 111L69 108.5M72 111L75 108.5M72 124.5L56.4 115.5M64.2 120L58.8 122M64.2 120L63.2 114.3M60.3 117.8L56.6 119.1M60.3 117.8L59.6 113.9M72 124.5L56.4 133.5M64.2 129L63.2 134.7M64.2 129L58.8 127M60.3 131.2L59.6 135.1M60.3 131.2L56.6 129.9M72 124.5L72 142.5M72 133.5L76.4 137.2M72 133.5L67.6 137.2M72 138L75 140.5M72 138L69 140.5M72 124.5L87.6 133.5M79.8 129L85.2 127M79.8 129L80.8 134.7M83.7 131.2L87.4 129.9M83.7 131.2L84.4 135.1M72 124.5L87.6 115.5M79.8 120L80.8 114.3M79.8 120L85.2 122M83.7 117.8L84.4 113.9M83.7 117.8L87.4 119.1M74.8 122.9L72 121.3L69.2 122.9L69.2 126.1L72 127.7L74.8 126.1Z' fill='none' stroke='black' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E");
 }
 
+/* ===== 馬（Horse.tsx）の動き：脚は付け根と膝で回し、胴は上下に弾ませる（基本は駈歩） ===== */
+.horse-body {
+  animation: horse-bob 0.6s linear infinite;
+}
+
+.horse-front-upper {
+  transform-box: view-box;
+  transform-origin: 146px 66px;
+  animation: horse-front-upper 0.6s linear infinite;
+}
+
+.horse-front-lower {
+  transform-box: view-box;
+  transform-origin: 146px 92px;
+  animation: horse-front-lower 0.6s linear infinite;
+}
+
+.horse-hind-upper {
+  transform-box: view-box;
+  transform-origin: 76px 64px;
+  animation: horse-hind-upper 0.6s linear infinite;
+}
+
+.horse-hind-lower {
+  transform-box: view-box;
+  transform-origin: 76px 90px;
+  animation: horse-hind-lower 0.6s linear infinite;
+}
+
+/* 奥側の脚は少しずらして、4本がばらばらに動いて見えるようにする */
+.horse-far .horse-front-upper,
+.horse-far .horse-front-lower {
+  animation-delay: -0.07s;
+}
+
+.horse-far .horse-hind-upper,
+.horse-far .horse-hind-lower {
+  animation-delay: -0.08s;
+}
+
+.horse-tail {
+  transform-box: view-box;
+  transform-origin: 62px 54px;
+  animation: horse-tail 0.6s ease-in-out infinite;
+}
+
+.horse-mane path {
+  transform-box: fill-box;
+  transform-origin: 100% 100%;
+  animation: horse-mane 0.6s ease-in-out infinite;
+}
+
+.horse-mane path:nth-child(2) {
+  animation-delay: -0.1s;
+}
+
+.horse-mane path:nth-child(3) {
+  animation-delay: -0.2s;
+}
+
+/* 到着した馬は脚を止める */
+.horse-idle * {
+  animation-play-state: paused !important;
+}
+
+@keyframes horse-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  35% {
+    transform: translateY(-5px);
+  }
+  65% {
+    transform: translateY(2px);
+  }
+}
+
+@keyframes horse-front-upper {
+  0% {
+    transform: rotate(-34deg);
+  }
+  45% {
+    transform: rotate(26deg);
+  }
+  70% {
+    transform: rotate(4deg);
+  }
+  100% {
+    transform: rotate(-34deg);
+  }
+}
+
+@keyframes horse-front-lower {
+  0% {
+    transform: rotate(-4deg);
+  }
+  45% {
+    transform: rotate(6deg);
+  }
+  62% {
+    transform: rotate(95deg);
+  }
+  85% {
+    transform: rotate(40deg);
+  }
+  100% {
+    transform: rotate(-4deg);
+  }
+}
+
+@keyframes horse-hind-upper {
+  0% {
+    transform: rotate(28deg);
+  }
+  30% {
+    transform: rotate(2deg);
+  }
+  55% {
+    transform: rotate(-26deg);
+  }
+  100% {
+    transform: rotate(28deg);
+  }
+}
+
+@keyframes horse-hind-lower {
+  0% {
+    transform: rotate(4deg);
+  }
+  18% {
+    transform: rotate(-80deg);
+  }
+  45% {
+    transform: rotate(-20deg);
+  }
+  55% {
+    transform: rotate(-4deg);
+  }
+  100% {
+    transform: rotate(4deg);
+  }
+}
+
+@keyframes horse-tail {
+  0%,
+  100% {
+    transform: rotate(-6deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+}
+
+@keyframes horse-mane {
+  0%,
+  100% {
+    transform: skewX(0);
+  }
+  50% {
+    transform: skewX(-14deg);
+  }
+}
+
+/* ===== 常歩（なみあし）：4本の脚が1本ずつ順に動く、ゆったりした歩き ===== */
+.horse-walk .horse-body {
+  animation: horse-walk-bob 0.6s ease-in-out infinite;
+}
+
+.horse-walk .horse-front-upper {
+  animation: horse-walk-front-upper 1.2s ease-in-out infinite;
+}
+
+.horse-walk .horse-front-lower {
+  animation: horse-walk-front-lower 1.2s ease-in-out infinite;
+}
+
+.horse-walk .horse-hind-upper {
+  animation: horse-walk-hind-upper 1.2s ease-in-out infinite;
+}
+
+.horse-walk .horse-hind-lower {
+  animation: horse-walk-hind-lower 1.2s ease-in-out infinite;
+}
+
+.horse-walk .horse-tail,
+.horse-walk .horse-mane path {
+  animation-duration: 1.2s;
+}
+
+/* 脚が動く順番：手前の後脚 → 手前の前脚 → 奥の後脚 → 奥の前脚（4分の1周期ずつ遅らせる） */
+.horse-walk .horse-near :is(.horse-front-upper, .horse-front-lower) {
+  animation-delay: -0.9s;
+}
+
+.horse-walk .horse-far :is(.horse-hind-upper, .horse-hind-lower) {
+  animation-delay: -0.6s;
+}
+
+.horse-walk .horse-far :is(.horse-front-upper, .horse-front-lower) {
+  animation-delay: -0.3s;
+}
+
+@keyframes horse-walk-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes horse-walk-front-upper {
+  0% {
+    transform: rotate(-16deg);
+  }
+  65% {
+    transform: rotate(14deg);
+  }
+  100% {
+    transform: rotate(-16deg);
+  }
+}
+
+@keyframes horse-walk-front-lower {
+  0%,
+  65% {
+    transform: rotate(0deg);
+  }
+  80% {
+    transform: rotate(55deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes horse-walk-hind-upper {
+  0% {
+    transform: rotate(-12deg);
+  }
+  65% {
+    transform: rotate(16deg);
+  }
+  100% {
+    transform: rotate(-12deg);
+  }
+}
+
+@keyframes horse-walk-hind-lower {
+  0%,
+  65% {
+    transform: rotate(0deg);
+  }
+  80% {
+    transform: rotate(-40deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* ===== 速歩（はやあし）：対角の脚が組になって動き、胴が弾む ===== */
+.horse-trot .horse-body {
+  animation: horse-trot-bob 0.35s ease-in-out infinite;
+}
+
+.horse-trot .horse-front-upper {
+  animation: horse-trot-front-upper 0.7s ease-in-out infinite;
+}
+
+.horse-trot .horse-front-lower {
+  animation: horse-trot-front-lower 0.7s ease-in-out infinite;
+}
+
+.horse-trot .horse-hind-upper {
+  animation: horse-trot-hind-upper 0.7s ease-in-out infinite;
+}
+
+.horse-trot .horse-hind-lower {
+  animation: horse-trot-hind-lower 0.7s ease-in-out infinite;
+}
+
+.horse-trot .horse-tail,
+.horse-trot .horse-mane path {
+  animation-duration: 0.7s;
+}
+
+/* 組み合わせ：手前の前脚と奥の後脚、奥の前脚と手前の後脚（半周期ずらす） */
+.horse-trot .horse-far :is(.horse-front-upper, .horse-front-lower),
+.horse-trot .horse-near :is(.horse-hind-upper, .horse-hind-lower) {
+  animation-delay: -0.35s;
+}
+
+@keyframes horse-trot-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes horse-trot-front-upper {
+  0% {
+    transform: rotate(-24deg);
+  }
+  50% {
+    transform: rotate(18deg);
+  }
+  100% {
+    transform: rotate(-24deg);
+  }
+}
+
+@keyframes horse-trot-front-lower {
+  0%,
+  50% {
+    transform: rotate(0deg);
+  }
+  70% {
+    transform: rotate(85deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes horse-trot-hind-upper {
+  0% {
+    transform: rotate(-20deg);
+  }
+  50% {
+    transform: rotate(22deg);
+  }
+  100% {
+    transform: rotate(-20deg);
+  }
+}
+
+@keyframes horse-trot-hind-lower {
+  0%,
+  50% {
+    transform: rotate(0deg);
+  }
+  70% {
+    transform: rotate(-65deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* ===== 障害飛越：駆けてきて踏み切り、前脚をたたんで横木を跳び越え、着地する ===== */
+.horse-jump .horse-body {
+  transform-box: view-box;
+  transform-origin: 110px 80px;
+  animation: horse-jump-body 1.8s ease-in-out infinite;
+}
+
+.horse-jump .horse-front-upper {
+  animation: horse-jump-front-upper 1.8s ease-in-out infinite;
+}
+
+.horse-jump .horse-front-lower {
+  animation: horse-jump-front-lower 1.8s ease-in-out infinite;
+}
+
+.horse-jump .horse-hind-upper {
+  animation: horse-jump-hind-upper 1.8s ease-in-out infinite;
+}
+
+.horse-jump .horse-hind-lower {
+  animation: horse-jump-hind-lower 1.8s ease-in-out infinite;
+}
+
+.horse-jump .horse-tail,
+.horse-jump .horse-mane path {
+  animation-duration: 0.9s;
+}
+
+.horse-jump
+  .horse-far
+  :is(.horse-front-upper, .horse-front-lower, .horse-hind-upper, .horse-hind-lower) {
+  animation-delay: -0.05s;
+}
+
+/* 横木（HorseIcon.tsx）が右から左へ流れ、馬が一番高く跳んだ瞬間に真下を通る */
+.horse-hurdle {
+  animation: horse-hurdle 1.8s linear infinite;
+}
+
+@keyframes horse-hurdle {
+  from {
+    transform: translateX(30px);
+  }
+  to {
+    transform: translateX(-30px);
+  }
+}
+
+@keyframes horse-jump-body {
+  0%,
+  28% {
+    transform: translateY(0) rotate(0deg);
+  }
+  40% {
+    transform: translateY(-16px) rotate(-16deg);
+  }
+  52% {
+    transform: translateY(-40px) rotate(0deg);
+  }
+  64% {
+    transform: translateY(-16px) rotate(14deg);
+  }
+  74%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes horse-jump-front-upper {
+  0% {
+    transform: rotate(-30deg);
+  }
+  14% {
+    transform: rotate(20deg);
+  }
+  28% {
+    transform: rotate(-36deg);
+  }
+  42% {
+    transform: rotate(-80deg);
+  }
+  60% {
+    transform: rotate(-70deg);
+  }
+  70% {
+    transform: rotate(-30deg);
+  }
+  84% {
+    transform: rotate(18deg);
+  }
+  100% {
+    transform: rotate(-30deg);
+  }
+}
+
+@keyframes horse-jump-front-lower {
+  0%,
+  14% {
+    transform: rotate(0deg);
+  }
+  21% {
+    transform: rotate(80deg);
+  }
+  28% {
+    transform: rotate(0deg);
+  }
+  42% {
+    transform: rotate(135deg);
+  }
+  60% {
+    transform: rotate(120deg);
+  }
+  70%,
+  84% {
+    transform: rotate(0deg);
+  }
+  92% {
+    transform: rotate(70deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes horse-jump-hind-upper {
+  0% {
+    transform: rotate(24deg);
+  }
+  14% {
+    transform: rotate(-20deg);
+  }
+  28% {
+    transform: rotate(32deg);
+  }
+  42% {
+    transform: rotate(48deg);
+  }
+  60% {
+    transform: rotate(10deg);
+  }
+  70% {
+    transform: rotate(-20deg);
+  }
+  84% {
+    transform: rotate(-24deg);
+  }
+  100% {
+    transform: rotate(24deg);
+  }
+}
+
+@keyframes horse-jump-hind-lower {
+  0% {
+    transform: rotate(0deg);
+  }
+  7% {
+    transform: rotate(-60deg);
+  }
+  14% {
+    transform: rotate(-10deg);
+  }
+  28% {
+    transform: rotate(0deg);
+  }
+  42% {
+    transform: rotate(10deg);
+  }
+  60% {
+    transform: rotate(-60deg);
+  }
+  70% {
+    transform: rotate(-80deg);
+  }
+  84% {
+    transform: rotate(-10deg);
+  }
+  92% {
+    transform: rotate(-55deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* ===== 立ち止まる動き（お辞儀・前掻き）の共通の姿勢：胴と脚の動きを止める ===== */
+/* 首から上は、首の付け根を軸に回す */
+.horse-head {
+  transform-box: view-box;
+  transform-origin: 150px 62px;
+}
+
+:is(.horse-bow, .horse-paw)
+  :is(.horse-body, .horse-front-upper, .horse-front-lower, .horse-hind-upper, .horse-hind-lower) {
+  animation: none;
+}
+
+/* 立ち止まった姿勢でも4本の脚が見えるよう、奥の脚を少し内側へ寄せておく */
+:is(.horse-bow, .horse-paw) .horse-far .horse-front-upper {
+  transform: rotate(8deg);
+}
+
+:is(.horse-bow, .horse-paw) .horse-far .horse-hind-upper {
+  transform: rotate(-8deg);
+}
+
+/* ===== お辞儀：立ち止まり、首の付け根を軸に首をゆっくり下げて、また上げる ===== */
+.horse-bow .horse-head {
+  animation: horse-bow 2.6s ease-in-out infinite;
+}
+
+.horse-bow .horse-tail,
+.horse-bow .horse-mane path {
+  animation-duration: 2.6s;
+}
+
+@keyframes horse-bow {
+  0%,
+  20% {
+    transform: rotate(0deg);
+  }
+  45%,
+  62% {
+    transform: rotate(38deg);
+  }
+  88%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* ===== 前掻き：立ち止まったまま少しうつむき、手前の前脚を持ち上げて前へ出し、地面をかいて戻す ===== */
+.horse-paw .horse-head {
+  transform: rotate(10deg);
+}
+
+.horse-paw .horse-near .horse-front-upper {
+  animation: horse-paw-upper 1.2s ease-in-out infinite;
+}
+
+.horse-paw .horse-near .horse-front-lower {
+  animation: horse-paw-lower 1.2s ease-in-out infinite;
+}
+
+.horse-paw .horse-tail,
+.horse-paw .horse-mane path {
+  animation-duration: 1.2s;
+}
+
+@keyframes horse-paw-upper {
+  0% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-30deg);
+  }
+  40% {
+    transform: rotate(-18deg);
+  }
+  55% {
+    transform: rotate(14deg);
+  }
+  70%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes horse-paw-lower {
+  0% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(80deg);
+  }
+  35% {
+    transform: rotate(15deg);
+  }
+  55%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* ===== 襲歩（しゅうほ）：いちばん速い走り方。脚を大きく伸ばして縮め、胴も前後に大きく揺れる ===== */
+.horse-gallop .horse-body {
+  transform-box: view-box;
+  transform-origin: 110px 70px;
+  animation: horse-gallop-body 0.45s linear infinite;
+}
+
+.horse-gallop .horse-front-upper {
+  animation: horse-gallop-front-upper 0.45s linear infinite;
+}
+
+.horse-gallop .horse-front-lower {
+  animation: horse-gallop-front-lower 0.45s linear infinite;
+}
+
+.horse-gallop .horse-hind-upper {
+  animation: horse-gallop-hind-upper 0.45s linear infinite;
+}
+
+.horse-gallop .horse-hind-lower {
+  animation: horse-gallop-hind-lower 0.45s linear infinite;
+}
+
+.horse-gallop .horse-tail,
+.horse-gallop .horse-mane path {
+  animation-duration: 0.45s;
+}
+
+/* 奥の脚は手前の脚より 0.05 秒遅れて地面を蹴る（後脚 → 後脚 → 前脚 → 前脚 の順になる） */
+.horse-gallop
+  .horse-far
+  :is(.horse-front-upper, .horse-front-lower, .horse-hind-upper, .horse-hind-lower) {
+  animation-delay: -0.4s;
+}
+
+@keyframes horse-gallop-body {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-7px) rotate(-4deg);
+  }
+  55% {
+    transform: translateY(2px) rotate(3deg);
+  }
+}
+
+@keyframes horse-gallop-front-upper {
+  0% {
+    transform: rotate(-20deg);
+  }
+  25% {
+    transform: rotate(-52deg);
+  }
+  60% {
+    transform: rotate(38deg);
+  }
+  100% {
+    transform: rotate(-20deg);
+  }
+}
+
+@keyframes horse-gallop-front-lower {
+  0% {
+    transform: rotate(20deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  60% {
+    transform: rotate(10deg);
+  }
+  75% {
+    transform: rotate(115deg);
+  }
+  92% {
+    transform: rotate(50deg);
+  }
+  100% {
+    transform: rotate(20deg);
+  }
+}
+
+@keyframes horse-gallop-hind-upper {
+  0% {
+    transform: rotate(-38deg);
+  }
+  35% {
+    transform: rotate(42deg);
+  }
+  60% {
+    transform: rotate(10deg);
+  }
+  100% {
+    transform: rotate(-38deg);
+  }
+}
+
+@keyframes horse-gallop-hind-lower {
+  0% {
+    transform: rotate(0deg);
+  }
+  35% {
+    transform: rotate(5deg);
+  }
+  50% {
+    transform: rotate(-95deg);
+  }
+  75% {
+    transform: rotate(-30deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
 /* 動きを減らす設定の人には、動きを止めて最初から表示する */
 @media (prefers-reduced-motion: reduce) {
   *,
