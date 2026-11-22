@@ -1,4 +1,6 @@
 import { Section } from '@/components/layouts/Section'
+import { CertificationTimeline } from '@/features/certification/components/CertificationTimeline'
+import { CERTIFICATIONS } from '@/features/certification/constants/certifications'
 import { ProfileHero } from '@/features/profile/components/ProfileHero'
 import { StrengthList } from '@/features/profile/components/StrengthList'
 import { PROFILE } from '@/features/profile/constants/profile'
@@ -21,6 +23,9 @@ export default function Home() {
         </Section>
         <Section id='works'>
           <ProjectList projects={PROJECTS} />
+        </Section>
+        <Section id='certifications'>
+          <CertificationTimeline certifications={CERTIFICATIONS} />
         </Section>
       </main>
       <footer className='px-4 pt-20 pb-12 text-center font-serif-en tracking-[0.2em] text-muted'>
