@@ -9,10 +9,10 @@
 
 ## 使用技術
 
-Next.js 16（App Router）、React 19、TypeScript、Tailwind CSS 4、ESLint、Prettier、GitHub Actions（CI）
+Next.js、React、TypeScript、Tailwind CSS 4、ESLint、Prettier、shadcn/ui、Motion、GitHub Actions（CI）
 
 - UI：shadcn/ui の 部品と Tailwind CSS で作成しています。
-- 馬のモーション：馬は SVG で描き、CSS アニメーション（@keyframes）で動かしています。脚は付け根と膝の2か所で回転させ、7種類の歩き方はクラス名で切り替えています。モーション用ライブラリを導入予定。
+- 馬のモーション：馬は SVG で描き、CSS アニメーション（@keyframes）で動かしています。脚は付け根と膝の2か所で回転させ、7種類の歩き方はクラス名で切り替えています。保有技術のレーンを走る動きと、画面に入ったときに各欄が現れる細かい動きは、Motion で作成しています。
 
 ## 起動方法
 
