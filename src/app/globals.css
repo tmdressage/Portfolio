@@ -1038,6 +1038,42 @@ main::before {
   }
 }
 
+/* ===== 案件カードの絵馬の形（ProjectCard.tsx） ===== */
+.ema {
+  /* 屋根（上のとがった部分）の高さ。屋根板・紐を通す穴・紐・中身の位置もこれに合わせる */
+  --ema-roof: 62px;
+  /* 縁の線の太さ */
+  --ema-border: 2px;
+  /* 面の屋根の高さ（面の上端から軒先まで）。縁の太さだけ内側に置いた面の屋根を、外側の屋根と平行にして、
+     斜めの辺の縁も縦の辺と同じ太さに見せる（屋根の傾きから計算すると、縁の太さの約4分の1だけ低くなる） */
+  --ema-face-roof: calc(var(--ema-roof) - var(--ema-border) * 0.25);
+}
+
+/* 外側の五角形を線の色で塗り、その縁の太さだけ内側に面を重ねて、縁の線に見せる */
+.ema-frame {
+  clip-path: polygon(50% 0, 100% var(--ema-roof), 100% 100%, 0 100%, 0 var(--ema-roof));
+}
+
+.ema-face {
+  clip-path: polygon(50% 0, 100% var(--ema-face-roof), 100% 100%, 0 100%, 0 var(--ema-face-roof));
+}
+
+/* ===== 案件ダイアログ ===== */
+.project-dialog::backdrop {
+  background: var(--color-backdrop);
+  backdrop-filter: blur(6px);
+}
+
+/* はみ出た中身は画面いっぱいの枠ごとスクロールして見せる。そのとき縦のスクロールバーは見えなくする */
+.project-dialog {
+  scrollbar-width: none;
+}
+
+/* scrollbar-width に対応していないブラウザ（古い Safari など）向け */
+.project-dialog::-webkit-scrollbar {
+  display: none;
+}
+
 /* 動きを減らす設定の人には、動きを止めて最初から表示する */
 @media (prefers-reduced-motion: reduce) {
   *,

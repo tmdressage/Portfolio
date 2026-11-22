@@ -4,6 +4,7 @@ import type { Gait } from '@/components/elements/Horse'
 export const SECTIONS = [
   { id: 'strengths', label: 'Strengths', title: '得意分野', gait: 'walk' },
   { id: 'skills', label: 'Skills', title: '保有技術', gait: 'trot' },
+  { id: 'works', label: 'Works', title: '経験案件', gait: 'jump' },
 ] as const satisfies readonly { id: string; label: string; title: string; gait: Gait }[]
 
 export type SectionId = (typeof SECTIONS)[number]['id']
