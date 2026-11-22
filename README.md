@@ -9,8 +9,8 @@
 
 Next.js 16（App Router）、React 19、TypeScript、Tailwind CSS 4、ESLint、Prettier、GitHub Actions（CI）
 
-- UI フレームワーク：部品はすべて Tailwind CSS で作成しています。
-- 馬のモーション：馬は SVG で描き、CSS アニメーション（@keyframes）で動かしています。脚は付け根と膝の2か所で回転させ、7種類の歩き方はクラス名で切り替えています。
+- UI：部品はすべて Tailwind CSS で作成しています。shadcn/uiなどのUIフレームワークを導入予定。
+- 馬のモーション：馬は SVG で描き、CSS アニメーション（@keyframes）で動かしています。脚は付け根と膝の2か所で回転させ、7種類の歩き方はクラス名で切り替えています。モーション用ライブラリを導入予定。
 
 ## 起動方法
 
