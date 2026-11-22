@@ -102,6 +102,156 @@ main::before {
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='166'%3E%3Cpath d='M24 41.5L24 23.5M24 32.5L19.6 28.8M24 32.5L28.4 28.8M24 28L21 25.5M24 28L27 25.5M24 41.5L8.4 32.5M16.2 37L10.8 39M16.2 37L15.2 31.3M12.3 34.8L8.6 36.1M12.3 34.8L11.6 30.9M24 41.5L8.4 50.5M16.2 46L15.2 51.7M16.2 46L10.8 44M12.3 48.2L11.6 52.1M12.3 48.2L8.6 46.9M24 41.5L24 59.5M24 50.5L28.4 54.2M24 50.5L19.6 54.2M24 55L27 57.5M24 55L21 57.5M24 41.5L39.6 50.5M31.8 46L37.2 44M31.8 46L32.8 51.7M35.7 48.3L39.4 46.9M35.7 48.3L36.4 52.1M24 41.5L39.6 32.5M31.8 37L32.8 31.3M31.8 37L37.2 39M35.7 34.8L36.4 30.9M35.7 34.8L39.4 36.1M26.8 39.9L24 38.3L21.2 39.9L21.2 43.1L24 44.7L26.8 43.1ZM72 124.5L72 106.5M72 115.5L67.6 111.8M72 115.5L76.4 111.8M72 111L69 108.5M72 111L75 108.5M72 124.5L56.4 115.5M64.2 120L58.8 122M64.2 120L63.2 114.3M60.3 117.8L56.6 119.1M60.3 117.8L59.6 113.9M72 124.5L56.4 133.5M64.2 129L63.2 134.7M64.2 129L58.8 127M60.3 131.2L59.6 135.1M60.3 131.2L56.6 129.9M72 124.5L72 142.5M72 133.5L76.4 137.2M72 133.5L67.6 137.2M72 138L75 140.5M72 138L69 140.5M72 124.5L87.6 133.5M79.8 129L85.2 127M79.8 129L80.8 134.7M83.7 131.2L87.4 129.9M83.7 131.2L84.4 135.1M72 124.5L87.6 115.5M79.8 120L80.8 114.3M79.8 120L85.2 122M83.7 117.8L84.4 113.9M83.7 117.8L87.4 119.1M74.8 122.9L72 121.3L69.2 122.9L69.2 126.1L72 127.7L74.8 126.1Z' fill='none' stroke='black' stroke-width='1.2' stroke-linecap='round'/%3E%3C/svg%3E");
 }
 
+/* 金色の文字（光が左から右へ流れる） */
+.gold-text {
+  background: linear-gradient(
+    100deg,
+    var(--color-sheen-start) 0%,
+    var(--color-gold-light) 30%,
+    var(--color-sheen-middle) 55%,
+    var(--color-gold-light) 80%,
+    var(--color-sheen-end) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sheen 6s linear infinite;
+}
+
+@keyframes sheen {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* 雪原（馬が走る地面）。縞模様は雪面のうねり */
+.snowfield {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      --alpha(var(--color-white) / 18%) 0 40px,
+      transparent 40px 80px
+    ),
+    linear-gradient(
+      180deg,
+      var(--color-snow-light) 0%,
+      var(--color-snow) 50%,
+      var(--color-snow-dark) 100%
+    );
+}
+
+/* 雪面の縞を流して、走っている景色にする（1秒に 160px 進む） */
+.snowfield-moving {
+  animation: snowfield-move 0.5s linear infinite;
+}
+
+@keyframes snowfield-move {
+  to {
+    background-position:
+      -80px 0,
+      0 0;
+  }
+}
+
+/* 雪原に残る蹄の跡（ProfileHero.tsx）。馬の脚の下から後ろへ、雪面と同じ速さで流れ、遠くなるほど薄くなる
+   駈歩の1歩（0.6秒）で雪面が進む 96px ごとに、蹄の跡（奥の脚は上・手前の脚は下）をくり返す
+   形は切り抜き（mask）で作り、色は --color-hoofprint で付ける。2枚目の切り抜きで左（遠く）へ向かって薄くする */
+.hoofprints {
+  background-color: var(--color-hoofprint);
+  mask-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='14'%3E%3Cellipse cx='8' cy='4.5' rx='4' ry='2.2'/%3E%3Cellipse cx='30' cy='9.5' rx='4' ry='2.2'/%3E%3Cellipse cx='36' cy='4.5' rx='4' ry='2.2'/%3E%3Cellipse cx='58' cy='9.5' rx='4' ry='2.2'/%3E%3C/svg%3E"),
+    linear-gradient(to left, black 30%, transparent);
+  mask-size:
+    96px 100%,
+    100% 100%;
+  mask-repeat: repeat-x, no-repeat;
+  mask-composite: intersect;
+  animation: hoofprints-move 0.6s linear infinite;
+}
+
+@keyframes hoofprints-move {
+  to {
+    mask-position:
+      -96px 0,
+      0 0;
+  }
+}
+
+/* 柵（トップの雪原の上を流れる） */
+.fence {
+  background:
+    linear-gradient(90deg, transparent 0 118px, --alpha(var(--color-gold) / 55%) 118px 120px) 0 0 /
+      120px 100% repeat-x,
+    linear-gradient(
+        transparent 14px,
+        --alpha(var(--color-gold) / 35%) 14px 15px,
+        transparent 15px 30px,
+        --alpha(var(--color-gold) / 35%) 30px 31px,
+        transparent 31px
+      )
+      0 0 / 100% 100% no-repeat;
+  animation: fence-move 1s linear infinite;
+}
+
+@keyframes fence-move {
+  to {
+    background-position:
+      -120px 0,
+      0 0;
+  }
+}
+
+/* 遠くの丘（ゆっくり流れる） */
+.hills {
+  animation: pan 40s linear infinite;
+}
+
+@keyframes pan {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* 蹄が蹴り上げる雪けむり */
+.snow-spray {
+  animation: puff 1.2s ease-out infinite;
+}
+
+@keyframes puff {
+  0% {
+    transform: translate(0, 0) scale(0.4);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(-90px, -26px) scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* スクロールの合図（線が上から下へ流れる） */
+.scroll-cue-line {
+  animation: drip 1.8s ease-in-out infinite;
+}
+
+@keyframes drip {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  51% {
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
 /* ===== 馬（Horse.tsx）の動き：脚は付け根と膝で回し、胴は上下に弾ませる（基本は駈歩） ===== */
 .horse-body {
   animation: horse-bob 0.6s linear infinite;
