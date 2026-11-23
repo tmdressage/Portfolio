@@ -33,7 +33,7 @@ export const PROJECTS: Project[] = [
       'Figma',
     ],
     languages: ['TypeScript v7', 'Go v1'],
-    phases: ['基本設計', '詳細設計', '実装', '単体テスト'],
+    phases: ['基本設計', '詳細設計', '実装／単体テスト'],
   },
   {
     id: 2,
@@ -63,7 +63,7 @@ export const PROJECTS: Project[] = [
       'Slack',
     ],
     languages: ['TypeScript v6'],
-    phases: ['詳細設計', '実装', '単体テスト', '結合テスト', '保守・運用'],
+    phases: ['詳細設計', '実装／単体テスト', '結合テスト', '総合テスト', '保守・運用'],
   },
   {
     id: 3,
@@ -92,7 +92,7 @@ export const PROJECTS: Project[] = [
       'Stock',
     ],
     languages: ['TypeScript v5'],
-    phases: ['実装', '単体テスト', '結合テスト'],
+    phases: ['実装／単体テスト'],
   },
   {
     id: 4,
@@ -111,7 +111,7 @@ export const PROJECTS: Project[] = [
     db: 'Access2016、365',
     tools: ['Access2016、365', 'SQL Server'],
     languages: ['VBA'],
-    phases: ['結合テスト'],
+    phases: ['実装／単体テスト', '結合テスト', '総合テスト'],
   },
   {
     id: 5,
@@ -138,7 +138,7 @@ export const PROJECTS: Project[] = [
       'XD',
     ],
     languages: ['TypeScript v5'],
-    phases: ['実装', '単体テスト'],
+    phases: ['実装／単体テスト'],
   },
   {
     id: 6,
@@ -171,7 +171,7 @@ export const PROJECTS: Project[] = [
       'Jira',
     ],
     languages: ['PHP v8', 'TypeScript v5'],
-    phases: ['要件定義', '実装', '単体テスト', '保守・運用'],
+    phases: ['要件定義', '実装／単体テスト', '結合テスト', '総合テスト', '保守・運用'],
   },
   {
     id: 7,
@@ -201,7 +201,7 @@ export const PROJECTS: Project[] = [
       'Notion',
     ],
     languages: ['PHP v8', 'TypeScript v5'],
-    phases: ['詳細設計', '実装', '単体テスト', '結合テスト', '保守・運用'],
+    phases: ['詳細設計', '実装／単体テスト', '結合テスト', '総合テスト', '保守・運用'],
   },
   {
     id: 8,
@@ -264,7 +264,7 @@ export const PROJECTS: Project[] = [
       'GAS',
     ],
     languages: ['PHP v8', 'TypeScript v5'],
-    phases: ['実装', '単体テスト', '結合テスト'],
+    phases: ['実装／単体テスト', '結合テスト', '総合テスト'],
   },
   {
     id: 10,
