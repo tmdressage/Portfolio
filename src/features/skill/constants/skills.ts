@@ -13,8 +13,8 @@ export const SKILLS: Skill[] = [
     id: 2,
     category: '言語',
     name: 'TypeScript',
-    period: '1年9ヶ月',
-    months: 21,
+    period: '2年',
+    months: 24,
   },
   {
     id: 3,
@@ -27,8 +27,8 @@ export const SKILLS: Skill[] = [
     id: 4,
     category: 'フレームワーク',
     name: 'Next.js',
-    period: '1年4ヶ月',
-    months: 16,
+    period: '1年8ヶ月',
+    months: 20,
   },
   {
     id: 5,
