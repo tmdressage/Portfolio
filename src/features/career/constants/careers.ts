@@ -49,7 +49,8 @@ export const CAREERS: Career[] = [
   {
     id: 6,
     period: '2009.03',
-    title: 'M大学農学部農学科 卒業',
+    // 個人情報を伏せた版では、大学名を出さない
+    title: process.env.MASK_PERSONAL_INFO === 'true' ? '大学農学部 卒業' : 'M大学農学部農学科 卒業',
     details: ['主に農学、畜産学を専攻（4年）'],
   },
 ]

@@ -2,7 +2,8 @@ import type { Profile } from '@/type/profile'
 
 // トップに出す名前・肩書き・自己紹介、得意分野
 export const PROFILE: Profile = {
-  name: 'Takeshi Motoyoshi',
+  // 個人情報を伏せた版では、名前をイニシャルにする
+  name: process.env.MASK_PERSONAL_INFO === 'true' ? 'T.M' : 'Takeshi Motoyoshi',
   role: 'Web エンジニア ／ Next.js・Laravel',
   about: [
     '2026年11月現在、北海道在住のフリーランスエンジニアです。',

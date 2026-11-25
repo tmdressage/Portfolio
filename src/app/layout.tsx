@@ -1,5 +1,6 @@
 import { HorseGradient } from '@/components/elements/Horse'
 import { MotionProvider } from '@/components/layouts/MotionProvider'
+import { PROFILE } from '@/features/profile/constants/profile'
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, Noto_Sans_JP, Shippori_Mincho_B1 } from 'next/font/google'
 import './globals.css'
@@ -26,8 +27,8 @@ const notoSansJp = Noto_Sans_JP({
 })
 
 export const metadata: Metadata = {
-  title: 'Takeshi Motoyoshi | Portfolio',
-  description: 'Web エンジニア Takeshi Motoyoshi のポートフォリオ',
+  title: `${PROFILE.name} | Portfolio`,
+  description: `Web エンジニア ${PROFILE.name} のポートフォリオ`,
   // 名前で検索しても出てこないよう、検索エンジンに載せない
   robots: { index: false },
 }
